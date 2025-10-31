@@ -1,0 +1,123 @@
+﻿@model IEnumerable<student.Models.AcdPrjProjectGroup>
+@{
+    ViewData["Title"] = "Project Group List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Project Groups</h2>
+    <a href="@Url.Action("ProjectGroupAddEdit", "ProjectGroup")" class="btn btn-success mb-3">+ Add New</a>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No project groups found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Project Title</th>
+                    <th>Project Area</th>
+                    <th>Type</th>
+                    <th>Guide</th>
+                    <th>Average CPI</th>
+                            <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProjectGroupId</td>
+                        <td>@item.ProjectGroupName</td>
+                        <td>@item.ProjectTitle</td>
+                        <td>@item.ProjectArea</td>
+                        <td>@item.ProjectTypeName</td>
+                        <td>@item.GuideStaffName</td>
+                        <td>@item.AverageCpi?.ToString("0.00")</td>
+                                <td>@item.Description</td>
+                        <td>
+                            <a href="@Url.Action("ProjectGroupAddEdit", new { id = item.ProjectGroupId })" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="@Url.Action("Delete", new { id = item.ProjectGroupId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@* @model IEnumerable<student.Models.AcdPrjProjectGroup>
+
+@{
+    ViewData["Title"] = "Project List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h2><i class="fa-solid fa-list text-primary me-2"></i>Project List</h2>
+        <p class="text-muted mb-0">Browse all student project groups with guide names and types.</p>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 mt-4">
+        <div class="card-body p-4">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Group ID</th>
+                            <th>Group name Title</th>
+                            <th>Project Title</th>
+                            <th>Average CPI</th>
+                            <th>Description</th>
+                            <th>GuideStaff</th>
+                            <th>Details</th> <!-- ✅ New Column -->
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var group in Model)
+                        {
+                            <tr>
+                                <td>@group.ProjectGroupId</td>
+                                <td>@group.ProjectGroupName</td>
+                                <td>@group.ProjectTitle</td>
+                                <td>@group.AverageCpi?.ToString("0.00")</td>
+                                <td>@group.Description</td>
+                                <td>@group.GuideStaffName</td> <!-- ✅ -->
+                                <td>
+                                    <a asp-action="GroupDetails"
+                                       asp-route-id="@group.ProjectGroupId"
+                                       class="btn btn-sm btn-outline-primary rounded-pill">
+                                        <i class="fa-solid fa-eye me-1"></i> View Members
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-center text-muted">No project groups found.</div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

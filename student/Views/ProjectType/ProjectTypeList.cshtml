@@ -1,0 +1,89 @@
+﻿@model IEnumerable<student.Models.AcdPrjProjectType>
+
+@{
+    ViewData["Title"] = "Project Type List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+
+
+    @* <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Project Type List</h2>
+        <a class="btn btn-success" href="/ProjectType/ProjectTypeAddEdit">
+            <i class="fa fa-plus"></i> Add Project Type
+        </a>
+    </div> *@
+
+   <div class="card-body">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning">No Project Types found.</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold">All Registered Project</h5>
+            <a class="btn btn-success px-3" href="/ProjectType/ProjectTypeAddEdit">
+                <i class="fa fa-plus me-2"></i> Add Project Type
+            </a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle shadow-sm">
+             <thead class="table-primary text-center ">
+                <tr>
+                    <th>ID</th>
+                    <th>Project Type Name</th>
+                    <th>Description</th>
+                    <th>Created</th>
+                    <th>Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProjectTypeId</td>
+                        <td>@item.ProjectTypeName</td>
+                        <td>@item.Description</td>
+                        <td>@item.Created.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Modified?.ToString("yyyy-MM-dd")</td>
+                        <td class="text-center">
+                            <a href="/ProjectType/ProjectTypeAddEdit/@item.ProjectTypeId" class="btn btn-warning btn-sm me-2">
+                                <i class="fa fa-edit"></i> 
+                            </a>
+                            <a href="/ProjectType/ProjectTypeDelete/@item.ProjectTypeId"
+                               onclick="return confirm('Are you sure you want to delete @item.ProjectTypeName?');"
+                               class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i> 
+                            </a>
+                             
+                        </td>
+                    </tr>
+                }
+            </tbody>
+          </table>
+        </div>
+
+    }
+    </div>
+    </div>
+</div>

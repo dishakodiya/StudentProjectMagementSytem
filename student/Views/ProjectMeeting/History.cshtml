@@ -1,0 +1,65 @@
+﻿@model IEnumerable<student.Models.ProjectMeeting>
+
+@{
+    ViewData["Title"] = "Meeting History";
+    Layout = "~/Views/Shared/_FacultyLayout.cshtml";
+
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-secondary text-white text-center rounded-top-4">
+            <h3>Project Meeting History</h3>
+        </div>
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-light text-center">
+                        <tr>
+                            <th>Project Group</th>
+                            <th>Guide</th>
+                            <th>Meeting Date</th>
+                            <th>Purpose</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                            <th>Status Description</th>
+                            <th>Status Updated</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var meeting in Model)
+                        {
+                            <tr>
+                                <td>@meeting.ProjectGroupName</td>
+                                <td>@meeting.GuideStaffName</td>
+                                <td>@meeting.MeetingDateTime.ToString("dd-MMM-yyyy hh:mm tt")</td>
+                                <td>@meeting.MeetingPurpose</td>
+                                <td>@meeting.MeetingLocation</td>
+                                <td>
+                                    <span class="bad @(meeting.MeetingStatus == "Completed" ? "bg-success" :
+                                                      meeting.MeetingStatus == "Cancelled" ? "bg-danger" :"bg-secondary")">
+                                @meeting.MeetingStatus
+                            </span>
+                        </td>
+                        <td>@meeting.MeetingNotes</td>
+                        <td>@meeting.MeetingStatusDescription</td>
+                        <td>@(meeting.MeetingStatusDatetime?.ToString("dd-MMM-yyyy hh:mm tt") ?? "-")</td>
+                        <td>@meeting.Description</td>
+                    </tr>
+                                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info text-center">
+                    No completed or cancelled meetings found.
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Portal</title>
+
+    <!-- Bootstrap & Custom CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout-common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Sidebar Toggle (For mobile view) -->
+    <div class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+        ☰
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa fa-cogs logo-icon"></i>
+            <div class="logo-text">Admin Panel</div>
+            <div class="logo-tagline">Project Management</div>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa fa-home me-2"></i> Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="Admin" asp-controller="Student" asp-action="StudentList">
+                    <i class="fa fa-users me-2"></i> Manage Students
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="Admin" asp-controller="Faculty" asp-action="FacultyList">
+                    <i class="fa fa-chalkboard-teacher me-2"></i> Manage Faculty
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="Admin" asp-controller="Projects" asp-action="Index">
+                    <i class="fa fa-tasks me-2"></i> Manage Projects
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="Admin" asp-controller="Reports" asp-action="Index">
+                    <i class="fa fa-chart-line me-2"></i> Reports
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="" asp-controller="Login" asp-action="Logout">
+                    <i class="fa fa-sign-out-alt me-2"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid p-4">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetalert/sweetalert.all.min.js"></script>
+    <script src="~/lib/sweetalert/myscript.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

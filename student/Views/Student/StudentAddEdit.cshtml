@@ -1,0 +1,48 @@
+﻿@model student.Models.AcdStudent
+
+@{
+    ViewData["Title"] = Model.StudentId == 0 ? "Add Student" : "Edit Student";
+}
+
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="StudentAddEdit" method="post" class="needs-validation">
+                <input type="hidden" asp-for="StudentId" />
+
+                <div class="mb-3">
+                    <label asp-for="StudentName" class="form-label">Student Name</label>
+                    <input asp-for="StudentName" class="form-control" required />
+                    <span asp-validation-for="StudentName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Phone" class="form-label">Phone</label>
+                    <input asp-for="Phone" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" type="email" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="@Url.Action("StudentList", "Student")" class="btn btn-secondary">⬅ Back to List</a>
+                    <button type="submit" class="btn btn-success">
+                        @(Model.StudentId == 0 ? "Add Student" : "Update Student")
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

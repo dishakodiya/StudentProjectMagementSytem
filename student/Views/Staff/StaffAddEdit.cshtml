@@ -1,0 +1,56 @@
+﻿@model student.Models.AcdStaff
+
+@{
+    ViewData["Title"] = Model.StaffId == 0 ? "Add Staff" : "Edit Staff";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // or your admin layout
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+
+        <div class="card-body">
+            <form asp-controller="Staff" asp-action="StaffAddEdit" method="post">
+                <input type="hidden" asp-for="StaffId" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="StaffName" class="form-label fw-bold">Staff Name</label>
+                        <input asp-for="StaffName" class="form-control" placeholder="Enter staff name" required />
+                        <span asp-validation-for="StaffName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Phone" class="form-label fw-bold">Phone</label>
+                        <input asp-for="Phone" class="form-control" placeholder="Enter phone number" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label fw-bold">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter email address" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Description" class="form-label fw-bold">Description</label>
+                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="StaffList" asp-controller="Staff" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left me-2"></i> Back to List
+                    </a>
+
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="fa fa-save me-2"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

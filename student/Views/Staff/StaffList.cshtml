@@ -1,0 +1,81 @@
+﻿@model IEnumerable<student.Models.AcdStaff>
+
+@{
+    ViewData["Title"] = "Staff List";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-modern">
+        <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold">All Registered Staff</h5>
+                <a class="btn btn-success" asp-controller="Staff" asp-action="StaffAddEdit">
+                    <i class="fa fa-plus me-2"></i> Add New Staff (coming soon)
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle shadow-sm">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Staff ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th style="width:120px;">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var staff in Model)
+                            {
+                                <tr class="text-center">
+                                    <td>@staff.StaffId</td>
+                                    <td>@staff.StaffName</td>
+                                    <td>@staff.Phone</td>
+                                    <td>@staff.Email</td>
+                                    <td>@staff.Description</td>
+                                    <td>@staff.Created.ToString("dd-MM-yyyy")</td>
+                                    <td>@staff.Modified?.ToString("dd-MM-yyyy")</td>
+                                    <td>
+                                        <a href="/Staff/StaffDelete/@staff.StaffId"
+                                           onclick="return confirm('Are you sure you want to delete @staff.StaffName?');"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                        <a href="/Staff/StaffAddEdit/@staff.StaffId"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fas fa-trash"></i> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">No staff found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

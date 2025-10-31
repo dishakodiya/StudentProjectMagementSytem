@@ -1,0 +1,90 @@
+﻿@model IEnumerable<student.Models.AcdStudent>
+
+@{
+    ViewData["Title"] = "Student List";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-modern">
+        <i class="fas fa-exclamation-circle"></i>
+        @TempData["ErrorMessage"]
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-modern">
+        <i class="fas fa-check-circle"></i>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">🎓 Student List</h3>
+        </div>
+        <a href="/Student/StudentAddEdit" class="btn btn-success">➕ Add New</a>
+
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-bordered table-striped table-hover text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <td>Action</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+                                <td>@student.StudentId</td>
+                                <td>@student.StudentName</td>
+                                <td>@student.Phone</td>
+                                <td>@student.Email</td>
+                                <td>@student.Description</td>
+                                <td>@student.Created.ToString("dd-MMM-yyyy")</td>
+                                <td>
+                                    <a href="/Student/StudentAddEdit/@student.StudentId" class="btn btn-warning">✏ Edit</a>
+                                </td>
+                                <td>
+
+                                    <a href="/Student/StudentDelete/@student.StudentId"
+                                       class="btn-delete btn-danger"
+                                       data-id="@student.StudentId"
+                                       data-name="@student.StudentName">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    No students found.
+                </div>
+            }
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-center mt-3">
+                    @ViewBag.Error
+                </div>
+            }
+        </div>
+    </div>
+</div>

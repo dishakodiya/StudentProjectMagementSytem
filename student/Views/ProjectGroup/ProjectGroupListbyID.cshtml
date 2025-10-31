@@ -1,0 +1,55 @@
+﻿@model student.Models.AcdPrjProjectGroup
+
+<div class="container mt-4">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3>@Model.ProjectGroupName</h3>
+            <p><strong>Guide:</strong> @Model.GuideStaffName</p>
+        </div>
+
+        <div class="card-body">
+            <p><strong>Project Area:</strong> @Model.ProjectArea</p>
+            <p><strong>Description:</strong> @Model.ProjectDescription</p>
+            <p><strong>Average CPI:</strong> @Model.AverageCpi</p>
+            <p><strong>Remark:</strong> @Model.Description</p>
+        </div>
+    </div>
+
+    <div class="card shadow mt-4 rounded-4">
+        <div class="card-header bg-success text-white text-center rounded-top-4">
+            <h4>Group Members</h4>
+        </div>
+        <div class="card-body">
+            @if (Model.Members != null && Model.Members.Any())
+            {
+                <table class="table table-bordered text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Student ID</th>
+                            <th>CGPA</th>
+                            <th>Leader</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model.Members)
+                        {
+                            <tr>
+                                <td>@m.StudentId</td>
+                                <td>@m.StudentCgpa</td>
+                                <td>@(m.IsGroupLeader ? "Leader" : "Member")</td>
+                                <td>@m.StudentName</td>
+                                <td>@m.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-danger text-center">No members found for this group.</p>
+            }
+        </div>
+    </div>
+</div>

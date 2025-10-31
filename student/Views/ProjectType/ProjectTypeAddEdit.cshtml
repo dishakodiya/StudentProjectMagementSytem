@@ -1,0 +1,42 @@
+﻿@model student.Models.AcdPrjProjectType
+
+@{
+    ViewData["Title"] = Model.ProjectTypeId == 0 ? "Add Project Type" : "Edit Project Type";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="ProjectTypeAddEdit" asp-controller="ProjectType" method="post">
+                <input type="hidden" asp-for="ProjectTypeId" />
+
+                <div class="mb-3">
+                    <label asp-for="ProjectTypeName" class="form-label fw-bold">Project Type Name</label>
+                    <input asp-for="ProjectTypeName" class="form-control" placeholder="Enter project type name" required />
+                    <span asp-validation-for="ProjectTypeName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="ProjectTypeList" asp-controller="ProjectType" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left me-2"></i> Back to List
+                    </a>
+
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="fa fa-save me-2"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
