@@ -1,4 +1,4 @@
-﻿@model IEnumerable<student.Models.ProjectMeetingViewModel>
+﻿@* @model IEnumerable<student.Models.ProjectMeetingViewModel>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -30,4 +30,94 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+@model IEnumerable<student.Models.ProjectMeetingViewModel>
+
+@{
+    ViewData["Title"] = "Project Meetings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-body">
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-warning text-center">No Project Meetings Found.</div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold">All Scheduled Meetings</h5>
+                    <a class="btn btn-success px-3" href="/ProjectMeeting/AddEdit">
+                        <i class="fa fa-plus me-2"></i> Add Meeting
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle shadow-sm">
+                        <thead class="table-primary text-center">
+                            <tr>
+                                <th>ID</th>
+                                <th>Project Group</th>
+                                <th>Guide Staff</th>
+                                <th>Purpose</th>
+                                <th>Date/Time</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProjectMeetingId</td>
+                                    <td>@item.ProjectGroupName</td>
+                                    <td>@item.GuideStaffName</td>
+                                    <td>@item.MeetingPurpose</td>
+                                    <td>@item.MeetingDateTime.ToString("g")</td>
+                                    <td>@item.MeetingLocation</td>
+                                    <td>
+                                        <span class="badge bg-@(item.MeetingStatus == "Completed" ? "success" :
+                                                              item.MeetingStatus == "Pending" ? "warning" : "secondary")">
+                                            @item.MeetingStatus
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/ProjectMeeting/AddEdit/@item.ProjectMeetingId" class="btn btn-warning btn-sm me-2">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.ProjectMeetingId"
+                                           onclick="return confirm('Are you sure you want to delete this meeting?');"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

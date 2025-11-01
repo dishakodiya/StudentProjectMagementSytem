@@ -30,35 +30,39 @@
 
         <ul class="sidebar-nav">
             <li>
-                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                <a asp-controller="Dashboard" asp-action="Index">
                     <i class="fa fa-home me-2"></i> Dashboard
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Student" asp-action="StudentList">
+                <a asp-controller="Student" asp-action="StudentList">
                     <i class="fa fa-users me-2"></i> Manage Students
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Faculty" asp-action="FacultyList">
+                <a asp-controller="Staff" asp-action="StaffList">
                     <i class="fa fa-chalkboard-teacher me-2"></i> Manage Faculty
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Projects" asp-action="Index">
+                <a asp-controller="ProjectGroup" asp-action="ProjectGroupList">
                     <i class="fa fa-tasks me-2"></i> Manage Projects
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Reports" asp-action="Index">
-                    <i class="fa fa-chart-line me-2"></i> Reports
+                <a asp-controller="ProjectMeeting" asp-action="ProjectMeetingList">
+                    <i class="fa fa-chart-line me-2"></i> Project Meetings
                 </a>
             </li>
-
+            <li>
+                <a asp-controller="ProjectGroupMember" asp-action="ProjectGroupMemberList">
+                    <i class="fa fa-chart-line me-2"></i> Project GroupMember
+                </a>
+            </li>
             <li>
                 <a asp-area="" asp-controller="Login" asp-action="Logout">
                     <i class="fa fa-sign-out-alt me-2"></i> Logout

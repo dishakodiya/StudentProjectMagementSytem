@@ -1,8 +1,15 @@
 ﻿@model student.Models.ProjectGroupMember
 @{
     ViewData["Title"] = Model.ProjectGroupMemberId == 0 ? "Add Group Member" : "Edit Group Member";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
+</div>
 
 <div class="container mt-4">
     <div class="card shadow-lg p-4 rounded-4">

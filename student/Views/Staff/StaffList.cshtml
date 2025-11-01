@@ -1,33 +1,43 @@
 ﻿@model IEnumerable<student.Models.AcdStaff>
 
 @{
-    ViewData["Title"] = "Staff List";
+    ViewData["Title"] = "All staff";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger alert-modern">
-        <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
     </div>
-}
+</div>
 
 <div class="container mt-5">
     <div class="card shadow-lg rounded-4">
-        <div class="card-header bg-primary text-white text-center rounded-top-4">
-            <h3>@ViewData["Title"]</h3>
-        </div>
-
         <div class="card-body">
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+                </div>
+            }
+
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="fw-bold">All Registered Staff</h5>
-                <a class="btn btn-success" asp-controller="Staff" asp-action="StaffAddEdit">
-                    <i class="fa fa-plus me-2"></i> Add New Staff (coming soon)
+                <a class="btn btn-success px-3" asp-controller="Staff" asp-action="StaffAddEdit">
+                    <i class="fa fa-plus me-2"></i> Add New Staff
                 </a>
             </div>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle shadow-sm">
-                    <thead class="table-dark text-center">
+                    <thead class="table-primary text-center">
                         <tr>
                             <th>Staff ID</th>
                             <th>Name</th>
@@ -36,8 +46,7 @@
                             <th>Description</th>
                             <th>Created</th>
                             <th>Modified</th>
-                            <th style="width:120px;">Actions</th>
-
+                            <th style="width:130px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,15 +63,17 @@
                                     <td>@staff.Created.ToString("dd-MM-yyyy")</td>
                                     <td>@staff.Modified?.ToString("dd-MM-yyyy")</td>
                                     <td>
-                                        <a href="/Staff/StaffDelete/@staff.StaffId"
-                                           onclick="return confirm('Are you sure you want to delete @staff.StaffName?');"
-                                           class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </a>
-                                        <a href="/Staff/StaffAddEdit/@staff.StaffId"
-                                           class="btn btn-primary btn-sm">
-                                            <i class="fas fa-trash"></i> Edit
-                                        </a>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="/Staff/StaffAddEdit/@staff.StaffId"
+                                               class="btn btn-warning btn-sm me-2">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="/Staff/StaffDelete/@staff.StaffId"
+                                               onclick="return confirm('Are you sure you want to delete @staff.StaffName?');"
+                                               class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -70,7 +81,9 @@
                         else
                         {
                             <tr>
-                                <td colspan="7" class="text-center text-muted">No staff found.</td>
+                                <td colspan="8" class="text-center text-muted py-3">
+                                    No staff found.
+                                </td>
                             </tr>
                         }
                     </tbody>

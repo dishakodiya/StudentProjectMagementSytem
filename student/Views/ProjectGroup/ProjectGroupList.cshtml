@@ -1,56 +1,91 @@
 ﻿@model IEnumerable<student.Models.AcdPrjProjectGroup>
 @{
-    ViewData["Title"] = "Project Group List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
+    ViewData["Title"] = "All Projects";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-primary">Project Groups</h2>
-    <a href="@Url.Action("ProjectGroupAddEdit", "ProjectGroup")" class="btn btn-success mb-3">+ Add New</a>
-
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">No project groups found.</div>
-    }
-    else
-    {
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Project Title</th>
-                    <th>Project Area</th>
-                    <th>Type</th>
-                    <th>Guide</th>
-                    <th>Average CPI</th>
-                            <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ProjectGroupId</td>
-                        <td>@item.ProjectGroupName</td>
-                        <td>@item.ProjectTitle</td>
-                        <td>@item.ProjectArea</td>
-                        <td>@item.ProjectTypeName</td>
-                        <td>@item.GuideStaffName</td>
-                        <td>@item.AverageCpi?.ToString("0.00")</td>
-                                <td>@item.Description</td>
-                        <td>
-                            <a href="@Url.Action("ProjectGroupAddEdit", new { id = item.ProjectGroupId })" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="@Url.Action("Delete", new { id = item.ProjectGroupId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
 </div>
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-body">
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-warning text-center">No Project Groups found.</div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold">All Project Groups</h5>
+                    <a class="btn btn-success px-3" href="@Url.Action("ProjectGroupAddEdit", "ProjectGroup")">
+                        <i class="fa fa-plus me-2"></i> Add New Group
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle shadow-sm">
+                        <thead class="table-primary text-center">
+                            <tr>
+                                <th>ID</th>
+                                <th>Group Name</th>
+                                <th>Project Title</th>
+                                <th>Project Area</th>
+                                <th>Type</th>
+                                <th>Guide</th>
+                                <th>Average CPI</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProjectGroupId</td>
+                                    <td>@item.ProjectGroupName</td>
+                                    <td>@item.ProjectTitle</td>
+                                    <td>@item.ProjectArea</td>
+                                    <td>@item.ProjectTypeName</td>
+                                    <td>@item.GuideStaffName</td>
+                                    <td class="text-center">@item.AverageCpi?.ToString("0.00")</td>
+                                    <td>@item.Description</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("ProjectGroupAddEdit", new { id = item.ProjectGroupId })" 
+                                           class="btn btn-warning btn-sm me-2">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete", new { id = item.ProjectGroupId })" 
+                                           onclick="return confirm('Are you sure you want to delete this project group?');"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 @* @model IEnumerable<student.Models.AcdPrjProjectGroup>
 
 @{

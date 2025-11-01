@@ -1,80 +1,88 @@
 ﻿@model IEnumerable<student.Models.AcdStudent>
 
 @{
-    ViewData["Title"] = "Student List";
+    ViewData["Title"] = "All Students";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger alert-modern">
-        <i class="fas fa-exclamation-circle"></i>
-        @TempData["ErrorMessage"]
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
     </div>
 }
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success alert-modern">
-        <i class="fas fa-check-circle"></i>
-        @TempData["SuccessMessage"]
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
     </div>
 }
-
-
-
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
+</div>
 <div class="container mt-5">
     <div class="card shadow-lg rounded-4">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">🎓 Student List</h3>
-        </div>
-        <a href="/Student/StudentAddEdit" class="btn btn-success">➕ Add New</a>
-
+  
 
         <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold">All Registered Students</h5>
+                <a href="/Student/StudentAddEdit" class="btn btn-success px-3">
+                    <i class="fa fa-plus me-2"></i> Add New Student
+                </a>
+            </div>
+
             @if (Model != null && Model.Any())
             {
-                <table class="table table-bordered table-striped table-hover text-center">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Description</th>
-                            <th>Created</th>
-                            <td>Action</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var student in Model)
-                        {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle shadow-sm">
+                        <thead class="table-primary text-center">
                             <tr>
-                                <td>@student.StudentId</td>
-                                <td>@student.StudentName</td>
-                                <td>@student.Phone</td>
-                                <td>@student.Email</td>
-                                <td>@student.Description</td>
-                                <td>@student.Created.ToString("dd-MMM-yyyy")</td>
-                                <td>
-                                    <a href="/Student/StudentAddEdit/@student.StudentId" class="btn btn-warning">✏ Edit</a>
-                                </td>
-                                <td>
-
-                                    <a href="/Student/StudentDelete/@student.StudentId"
-                                       class="btn-delete btn-danger"
-                                       data-id="@student.StudentId"
-                                       data-name="@student.StudentName">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </a>
-                                </td>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                                <th style="width:130px;">Actions</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model)
+                            {
+                                <tr class="text-center">
+                                    <td>@student.StudentId</td>
+                                    <td>@student.StudentName</td>
+                                    <td>@student.Phone</td>
+                                    <td>@student.Email</td>
+                                    <td>@student.Description</td>
+                                    <td>@student.Created.ToString("dd-MMM-yyyy")</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="/Student/StudentAddEdit/@student.StudentId"
+                                               class="btn btn-warning btn-sm me-2">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="/Student/StudentDelete/@student.StudentId"
+                                               onclick="return confirm('Are you sure you want to delete @student.StudentName?');"
+                                               class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
             else
             {
-                <div class="alert alert-warning text-center">
+                <div class="alert alert-info text-center">
                     No students found.
                 </div>
             }

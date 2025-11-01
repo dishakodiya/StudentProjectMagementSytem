@@ -1,15 +1,22 @@
 ﻿@model student.Models.AcdStudent
-
 @{
     ViewData["Title"] = Model.StudentId == 0 ? "Add Student" : "Edit Student";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="container">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h3 class="text-white">@ViewData["Title"]</h3>
+        </div>
+    </div>
+</div>
 
 <div class="container mt-5">
     <div class="card shadow-lg rounded-4">
-        <div class="card-header bg-primary text-white">
+        @* <div class="card-header bg-primary text-white">
             <h3 class="mb-0">@ViewData["Title"]</h3>
-        </div>
+        </div> *@
 
         <div class="card-body">
             <form asp-action="StudentAddEdit" method="post" class="needs-validation">
