@@ -1,0 +1,44 @@
+@model student.Models.ProjectMeeting
+
+@{
+    ViewData["Title"] = Model.ProjectMeetingId == 0 ? "Add Project Meeting" : "Edit Project Meeting";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="AddEdit" method="post">
+    <input type="hidden" asp-for="ProjectMeetingId" />
+
+    <div class="mb-3">
+        <label>Project Group ID</label>
+        <input asp-for="ProjectGroupId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Guide Staff ID</label>
+        <input asp-for="GuideStaffId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Meeting Purpose</label>
+        <input asp-for="MeetingPurpose" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Meeting Date & Time</label>
+        <input asp-for="MeetingDateTime" type="datetime-local" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Location</label>
+        <input asp-for="MeetingLocation" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+        <input asp-for="MeetingStatus" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="ProjectMeetingList" class="btn btn-secondary">Cancel</a>
+</form>
