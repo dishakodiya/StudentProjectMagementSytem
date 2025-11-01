@@ -21,18 +21,70 @@ namespace student.Controllers
             {
                 var response = await _httpClient.GetAsync(apiBaseUrl);
                 if (!response.IsSuccessStatusCode)
-                    return View(new List<ProjectMeetingViewModel>());
+                    return View(new List<ProjectMeeting>());
 
                 var json = await response.Content.ReadAsStringAsync();
 
                 // Deserialize into strongly typed list
-                var meetings = JsonConvert.DeserializeObject<List<ProjectMeetingViewModel>>(json);
+                var meetings = JsonConvert.DeserializeObject<List<ProjectMeeting>>(json);
 
                 return View(meetings);
             }
 
+        public async Task<IActionResult> AddEdit(int? id)
+        {
+            if (id == null)
+                return View(new ProjectMeeting()); // Add new
 
-     }
+            var response = await _httpClient.GetAsync($"{apiBaseUrl}/{id}");
+            if (!response.IsSuccessStatusCode)
+                return NotFound();
+
+            var json = await response.Content.ReadAsStringAsync();
+            var meeting = JsonConvert.DeserializeObject<ProjectMeeting>(json);
+
+            return View(meeting); // Edit existing
+        }
+
+        // POST: Add/Edit
+        [HttpPost]
+        public async Task<IActionResult> AddEdit(ProjectMeeting model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // Set Created/Modified for new record
+            if (model.ProjectMeetingId == 0)
+                model.Created = DateTime.Now;
+
+            model.Modified = DateTime.Now;
+
+            var jsonData = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            if (model.ProjectMeetingId == 0)
+            {
+                // Add new
+                await _httpClient.PostAsync(apiBaseUrl, content);
+            }
+            else
+            {
+                // Update existing
+                await _httpClient.PutAsync($"{apiBaseUrl}/{model.ProjectMeetingId}", content);
+            }
+
+            return RedirectToAction(nameof(ProjectMeetingList));
+        }
+
+        // DELETE
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _httpClient.DeleteAsync($"{apiBaseUrl}/{id}");
+            return RedirectToAction(nameof(ProjectMeetingList));
+        }
+
+
+    }
 }
 
 
