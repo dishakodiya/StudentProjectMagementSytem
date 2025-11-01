@@ -45,18 +45,13 @@ namespace student.Models
 
         public DateTime Created { get; set; }
         public DateTime? Modified { get; set; }
+        public string? ProjectGroupName { get; set; }
+        public string? GuideStaffName { get; set; }
+
+        
 
     }
-    public class ProjectMeetingViewModel
-    {
-        public int ProjectMeetingId { get; set; }
-        public string ProjectGroupName { get; set; } = "N/A";
-        public string GuideStaffName { get; set; } = "N/A";
-        public DateTime MeetingDateTime { get; set; }
-        public string MeetingPurpose { get; set; } = "";
-        public string? MeetingLocation { get; set; }
-        public string? MeetingStatus { get; set; }
-    }
+   
     public partial class AcdPrjProjectMeetingAttendance
     {
         public int ProjectMeetingAttendanceId { get; set; }

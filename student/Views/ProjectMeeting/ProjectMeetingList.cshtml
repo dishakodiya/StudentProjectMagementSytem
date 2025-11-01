@@ -1,4 +1,4 @@
-﻿@model IEnumerable<student.Models.ProjectMeetingViewModel>
+﻿@* @model IEnumerable<student.Models.ProjectMeetingViewModel>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -26,6 +26,61 @@
                 <td>@item.MeetingStatus</td>
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.ProjectMeetingId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+
+
+
+@model IEnumerable<student.Models.ProjectMeeting>
+
+@{
+    ViewData["Title"] = "Project Meeting List";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="mb-3">
+    <a asp-action="AddEdit" class="btn btn-success">Add New Meeting</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Project Group</th>
+            <th>Guide Staff</th>
+            <th>Purpose</th>
+            <th>Date/Time</th>
+            <th>Location</th>
+            <th>MeetingNotes</th>
+            <th>MeetingStatus</th>
+            @* <th>MeetingStatusDescription</th>
+            <th>MeetingStatusDatetime</th> *@
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProjectMeetingId</td>
+                <td>@item.ProjectGroupName</td>
+                <td>@item.GuideStaffName</td>
+                <td>@item.MeetingPurpose</td>
+                <td>@item.MeetingDateTime.ToString("g")</td>
+                <td>@item.MeetingLocation</td>
+                <td>@item.MeetingNotes</td>
+                <td>@item.MeetingStatus</td>
+                @* <td>@item.MeetingStatusDescription</td>
+                <td>@item.MeetingStatusDatetime</td> *@
+                <td>@item.Description</td>
+                <td>
+                    <a asp-action="AddEdit" asp-route-id="@item.ProjectMeetingId" class="btn btn-primary btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProjectMeetingId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this meeting?');">Delete</a>
                 </td>
             </tr>
         }

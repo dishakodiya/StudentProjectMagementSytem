@@ -10,33 +10,43 @@
     <input type="hidden" asp-for="ProjectMeetingId" />
 
     <div class="mb-3">
-        <label>Project Group ID</label>
+        <label asp-for="ProjectGroupId" class="form-label"></label>
         <input asp-for="ProjectGroupId" class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Guide Staff ID</label>
+        <label asp-for="GuideStaffId" class="form-label"></label>
         <input asp-for="GuideStaffId" class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Meeting Purpose</label>
+        <label asp-for="MeetingPurpose" class="form-label"></label>
         <input asp-for="MeetingPurpose" class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Meeting Date & Time</label>
+        <label asp-for="MeetingDateTime" class="form-label"></label>
         <input asp-for="MeetingDateTime" type="datetime-local" class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Location</label>
+        <label asp-for="MeetingLocation" class="form-label"></label>
         <input asp-for="MeetingLocation" class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Status</label>
+        <label asp-for="MeetingStatus" class="form-label"></label>
         <input asp-for="MeetingStatus" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MeetingNotes" class="form-label"></label>
+        <textarea asp-for="MeetingNotes" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
