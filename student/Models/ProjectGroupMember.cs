@@ -20,8 +20,8 @@ namespace student.Models
 
         public DateTime? Modified { get; set; }
         
-        [NotMapped]/////////////
-        public string? StudentName { get; set; }/////
+        [NotMapped]
+        public string? StudentName { get; set; }
 
 
         public ProjectGroup? ProjectGroup { get; set; }
