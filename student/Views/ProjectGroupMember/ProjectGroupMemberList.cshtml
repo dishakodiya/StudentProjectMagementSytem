@@ -1,0 +1,80 @@
+﻿@model IEnumerable<student.Models.ProjectGroupMember>
+@{
+    ViewData["Title"] = "Project Group Members";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary mb-3">Project Group Members</h2>
+    <a href="@Url.Action("ProjectGroupMemberAddEdit")" class="btn btn-success mb-3">+ Add New</a>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No members found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Group</th>
+                    <th>Student</th>
+                    <th>Leader</th>
+                    <th>CGPA</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProjectGroupMemberId</td>
+                        <td>@item.ProjectGroup?.ProjectGroupName</td>
+                        <td>@item.Student?.StudentName</td>
+                        <td>@(item.IsGroupLeader ? "Yes" : "No")</td>
+                        <td>@item.StudentCgpa</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a href="@Url.Action("ProjectGroupMemberAddEdit", new { id = item.ProjectGroupMemberId })" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="@Url.Action("Delete", new { id = item.ProjectGroupMemberId })" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@* @model IEnumerable<student.Models.ProjectGroupMember>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project Group</th>
+            <th>Student</th>
+            <th>Leader</th>
+            <th>CGPA</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProjectGroupMemberId</td>
+                <td>@item.ProjectGroup?.ProjectGroupName</td>
+                <td>@item.Student?.StudentName</td>
+                <td>@(item.IsGroupLeader ? "Yes" : "No")</td>
+                <td>@item.StudentCgpa</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("AddEdit", new { id = item.ProjectGroupMemberId })" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = item.ProjectGroupMemberId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<student.Models.ProjectMeetingViewModel>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Project Group</th>
+            <th>Guide Staff</th>
+            <th>Purpose</th>
+            <th>Date/Time</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProjectMeetingId</td>
+                <td>@item.ProjectGroupName</td>
+                <td>@item.GuideStaffName</td>
+                <td>@item.MeetingPurpose</td>
+                <td>@item.MeetingDateTime.ToString("g")</td>
+                <td>@item.MeetingLocation</td>
+                <td>@item.MeetingStatus</td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ProjectMeetingId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
