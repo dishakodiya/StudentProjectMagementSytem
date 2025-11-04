@@ -61,6 +61,7 @@
             <th>MeetingStatusDatetime</th> *@
             <th>Description</th>
             <th>Actions</th>
+            <th>Fell attendence</th>
         </tr>
     </thead>
     <tbody>
@@ -81,6 +82,13 @@
                 <td>
                     <a asp-action="AddEdit" asp-route-id="@item.ProjectMeetingId" class="btn btn-primary btn-sm">Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.ProjectMeetingId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this meeting?');">Delete</a>
+                </td>
+                                <td>
+                    <a asp-action="AttendenceMark" asp-route-meetingId="@item.ProjectMeetingId" asp-route-projectGroupId="@item.ProjectGroupId" class="btn btn-primary">
+                        Mark Attendance
+                    </a>
+
+
                 </td>
             </tr>
         }

@@ -1,0 +1,41 @@
+﻿@model student.Models.AttendanceMarkViewModel
+
+@{
+    ViewData["Title"] = "Mark Attendance";
+}
+
+<h2 class="mb-3">@ViewData["Title"]</h2>
+
+<form asp-action="AttendenceMark" method="post">
+    <input type="hidden" asp-for="ProjectMeetingId" />
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Student Name</th>
+                <th>Present</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Members.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => m.Members[i].StudentName)
+                        <input type="hidden" asp-for="Members[i].StudentId" />
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="Members[i].IsPresent" />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" asp-for="Members[i].Remarks" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Save Attendance</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

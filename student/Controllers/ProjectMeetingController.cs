@@ -3,15 +3,16 @@ using Newtonsoft.Json;
 using student.Models;
 using System.Text;
 using static student.Models.ProjectMeeting;
-
 namespace student.Controllers
 {
      public class ProjectMeetingController : Controller
      {
             private readonly HttpClient _httpClient;
             private readonly string apiBaseUrl = "https://localhost:7148/api/AcdPrjProjectMeeting"; // Replace with your API URL
-
-            public ProjectMeetingController(IHttpClientFactory httpClientFactory)
+        private readonly string projectMeetingApi = "https://localhost:7148/api/AcdPrjProjectMeeting";
+        private readonly string attendanceApi = "https://localhost:7148/api/AcdPrjProjectMeetingAttendance";
+        private readonly string projectGroupApi = "https://localhost:7148/api/AcdPrjProjectGroupMembers";
+        public ProjectMeetingController(IHttpClientFactory httpClientFactory)
             {
                 _httpClient = httpClientFactory.CreateClient();
             }
@@ -82,7 +83,101 @@ namespace student.Controllers
             await _httpClient.DeleteAsync($"{apiBaseUrl}/{id}");
             return RedirectToAction(nameof(ProjectMeetingList));
         }
+        public async Task<IActionResult> AttendenceMark(int meetingId, int projectGroupId)
+        {
+            // ✅ Call the new combined API
+            var response = await _httpClient.GetAsync($"{attendanceApi}/ByProjectAndMeeting/{projectGroupId}/{meetingId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                ViewBag.Error = "Unable to load project members.";
+                return View(new AttendanceMarkViewModel
+                {
+                    ProjectMeetingId = meetingId,
+                    Members = new List<AttendanceMember>()
+                });
+            }
 
+            var data = await response.Content.ReadAsStringAsync();
+
+            // Deserialize into a dynamic structure (anonymous object)
+            var membersData = JsonConvert.DeserializeObject<List<dynamic>>(data);
+
+            // Map response to view model
+            var members = membersData.Select(m => new AttendanceMember
+            {
+                StudentId = (int)m.studentId,
+                StudentName = (string)m.studentName,
+                IsPresent = m.isPresent != null ? (bool)m.isPresent : false,
+                Remarks = m.attendanceRemarks != null ? (string)m.attendanceRemarks : ""
+            }).ToList();
+
+            var viewModel = new AttendanceMarkViewModel
+            {
+                ProjectMeetingId = meetingId,
+                Members = members
+            };
+
+            return View(viewModel);
+        }
+
+
+
+        // ✅ Attendance POST
+        [HttpPost]
+        public async Task<IActionResult> AttendenceMark(AttendanceMarkViewModel model)
+        {
+            if (model == null || model.Members == null || !model.Members.Any())
+            {
+                TempData["Error"] = "No attendance data provided.";
+                return RedirectToAction(nameof(ProjectMeetingList));
+            }
+
+            foreach (var member in model.Members)
+            {
+                var attendanceData = new
+                {
+                    ProjectMeetingId = model.ProjectMeetingId,
+                    StudentId = member.StudentId,
+                    IsPresent = member.IsPresent,
+                    AttendanceRemarks = member.Remarks,
+                    Description = "Attendance updated from MVC",
+                    Modified = DateTime.Now
+                };
+
+                var json = JsonConvert.SerializeObject(attendanceData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // ✅ Call your API's PUT endpoint
+                var response = await _httpClient.PutAsync(
+                    $"{attendanceApi}/ByMeeting/{model.ProjectMeetingId}/{member.StudentId}",
+                    content
+                );
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Optional logging or error handling
+                    Console.WriteLine($"Failed for student {member.StudentId}");
+                }
+            }
+
+            TempData["Message"] = "Attendance saved successfully!";
+            return RedirectToAction(nameof(ProjectMeetingList));
+        }
+
+        // ✅ View Attendance
+        public async Task<IActionResult> ViewAttendance(int meetingId)
+        {
+            var response = await _httpClient.GetAsync($"{attendanceApi}/ByMeeting/{meetingId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                ViewBag.Error = "Unable to load attendance data.";
+                return View(new List<AcdPrjProjectMeetingAttendance>());
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var attendance = JsonConvert.DeserializeObject<List<AcdPrjProjectMeetingAttendance>>(data);
+            return View(attendance);
+        }
 
     }
 }
