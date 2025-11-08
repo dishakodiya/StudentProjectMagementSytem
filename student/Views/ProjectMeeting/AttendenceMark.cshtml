@@ -1,4 +1,4 @@
-﻿@model student.Models.AttendanceMarkViewModel
+﻿@* @model student.Models.AttendanceMarkViewModel
 
 @{
     ViewData["Title"] = "Mark Attendance";
@@ -38,4 +38,62 @@
 
     <button type="submit" class="btn btn-success">Save Attendance</button>
     <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form> *@
+@model List<student.Models.AttendanceMarkViewModel>
+
+@{
+    ViewData["Title"] = "Mark Attendance";
+}
+
+<h2 class="mb-3">@ViewData["Title"]</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
+<form method="post" asp-action="AttendenceMark">
+    <input type="hidden" name="ProjectMeetingId" value="@ViewBag.MeetingId" />
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Student Name</th>
+                <th class="text-center">Present</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                for (int j = 0; j < Model[i].Members.Count; j++)
+                {
+                    var member = Model[i].Members[j];
+                    <tr>
+                        <td>
+                            @member.StudentName
+                            <input type="hidden" name="[@i].Members[@j].StudentId" value="@member.StudentId" />
+                            <input type="hidden" name="[@i].ProjectMeetingId" value="@Model[i].ProjectMeetingId" />
+                        </td>
+                        <td class="text-center">
+                            <input type="checkbox" name="[@i].Members[@j].IsPresent" value="true" @(member.IsPresent ? "checked" : "") />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="[@i].Members[@j].Remarks" value="@member.Remarks" placeholder="Remarks..." />
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">💾 Save Attendance</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
 </form>
+

@@ -180,9 +180,17 @@ namespace student.Models
         public StudentInfo? Student { get; set; }
     }
 
+    public class ProjectGroupWithMembers
+    {
+        public int ProjectGroupId { get; set; }
+        public string? ProjectGroupName { get; set; }
+        public List<StudentInfo>? Members { get; set; }
+    }
+
     public class StudentInfo
     {
         public int StudentId { get; set; }
         public string? StudentName { get; set; }
     }
+
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Admin Portal</title>
+    <title>@ViewData["Title"] - Faculty Portal</title>
 
     <!-- Bootstrap & Custom CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -36,19 +36,19 @@
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Student" asp-action="StudentList">
+                <a asp-controller="Student" asp-action="StudentList">
                     <i class="fa fa-users me-2"></i> Manage Students
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Faculty" asp-action="FacultyList">
-                    <i class="fa fa-chalkboard-teacher me-2"></i> Manage Faculty
+                <a asp-controller="ProjectMeeting" asp-action="ProjectMeetingList">
+                    <i class="fa fa-chalkboard-teacher me-2"></i> Manage Meeting
                 </a>
             </li>
 
             <li>
-                <a asp-area="Admin" asp-controller="Projects" asp-action="Index">
+                <a asp-controller="ProjectGroup" asp-action="ProjectGroupList">
                     <i class="fa fa-tasks me-2"></i> Manage Projects
                 </a>
             </li>
